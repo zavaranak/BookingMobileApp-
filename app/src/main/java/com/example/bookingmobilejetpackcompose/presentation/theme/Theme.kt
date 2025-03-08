@@ -4,11 +4,12 @@ import android.os.Build
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
@@ -17,9 +18,10 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,25 +76,25 @@ fun BookingMobileJetpackComposeTheme(
 
 @Composable
 fun ThemeButton(name:String,size:String?,color:String, onClick: (()->Unit)?){
-    val fontSize = calFontSizeButton((size))
-    val colors = setColors(color)
+    val _fontSize = calFontSize((size))
+    val _colors = setColors(color)
 //    val
     Button(
         onClick={if(onClick!=null)onClick()},
         modifier = Modifier
             .fillMaxWidth()
             .border(
-                BorderStroke(1.dp, colors.contentColor),
-                shape = RoundedCornerShape(20.dp)
+                BorderStroke(1.dp, _colors.contentColor),
+                shape = RoundedCornerShape(15.dp)
             ),
-        colors = colors,
+        colors = _colors,
 
         ) {
-        Text(text=name,fontSize=fontSize)
+        Text(text=name,fontSize=_fontSize)
     }
 }
 
-fun calFontSizeButton(size:String?): TextUnit{
+fun calFontSize(size:String?): TextUnit{
     when (size) {
         "big" -> return 20.sp
         "small" -> return 15.sp
@@ -123,7 +125,23 @@ fun setColors(color:String):ButtonColors{
         }
         "filled"->{
             return ButtonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = Purple40,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContentColor = MaterialTheme.colorScheme.onSecondary,
+                disabledContainerColor = MaterialTheme.colorScheme.secondary
+            )
+        } 
+        "bold"->{
+            return ButtonColors(
+                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContentColor = MaterialTheme.colorScheme.onSecondary,
+                disabledContainerColor = MaterialTheme.colorScheme.secondary
+            )
+        }
+        "red"->{
+            return ButtonColors(
+                containerColor = MaterialTheme.colorScheme.error,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 disabledContentColor = MaterialTheme.colorScheme.onSecondary,
                 disabledContainerColor = MaterialTheme.colorScheme.secondary
@@ -131,11 +149,46 @@ fun setColors(color:String):ButtonColors{
         }
         else ->{
             return ButtonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = Purple40,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 disabledContentColor = MaterialTheme.colorScheme.onSecondary,
                 disabledContainerColor = MaterialTheme.colorScheme.secondary
             )
+        }
+    }
+}
+
+
+@Composable
+fun ThemeTextOutline(text:String){
+    Box(
+        modifier = Modifier.border(1.dp,Purple40,shape = RoundedCornerShape(10.dp)).fillMaxWidth(),
+    ){
+        Text(text, color = Purple40, textAlign = TextAlign.Center, modifier = Modifier.align(
+            Alignment.Center).padding(10.dp))
+    }
+}
+@Composable
+fun ThemeText(text:String, size:String, color:String){
+    val _color:Color = setTextColor(color)
+    val _fontSize:TextUnit = calFontSize(size)
+    Text(text, color = _color, textAlign = TextAlign.Center, fontSize = _fontSize)
+}
+
+@Composable
+fun setTextColor(color:String):Color{
+    when (color){
+        "primary"->{
+            return Purple40
+        }
+        "black" -> {
+            return Color.Black
+        }
+        "bold" -> {
+            return MaterialTheme.colorScheme.onPrimaryContainer
+        }
+        else ->{
+            return Purple40
         }
     }
 }

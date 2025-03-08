@@ -24,7 +24,7 @@ import com.example.bookingmobilejetpackcompose.presentation.utils.Routes
 
 @Composable
 fun NavBar(navController: NavController) {
-    var selectedItem by remember{ mutableIntStateOf(1)}
+    var selectedItem by remember{ mutableIntStateOf(0)}
     val selectedIcons = listOf(Icons.Filled.Home, Icons.Filled.List, Icons.Filled.Person, Icons.Filled.Notifications)
     val unselectedIcons = listOf(Icons.Outlined.Home, Icons.Outlined.List, Icons.Outlined.Person, Icons.Outlined.Notifications)
 

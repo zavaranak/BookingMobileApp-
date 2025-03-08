@@ -11,15 +11,9 @@ data class Date(
     val year: Int
 ){
     override fun toString(): String {
-        val dayStr:String = if(day>9)day.toString() else "0" + day.toString()
-        val monthStr:String = if(month>9)month.toString() else "0" + month.toString()
+        val dayStr:String = if(day>9)day.toString() else "0$day"
+        val monthStr:String = if(month>9)month.toString() else "0$month"
         return "$dayStr.$monthStr.$year"
-    }
-    fun toValue():Int{
-        val dayStr:String = if(day>9)day.toString() else "0" + day.toString()
-        val monthStr:String = if(month>9)month.toString() else "0" + month.toString()
-        val yearStr:String = year.toString()
-        return (dayStr+monthStr+yearStr).toInt()
     }
 }
 
@@ -28,9 +22,7 @@ data class BookingState(
     val guestNumber: Int = 1,
     val startDate: Date? =null,
     val endDate: Date? = null
-) {
-}
-
+)
 class BookingViewModel : ViewModel() {
 
     var bookingState by mutableStateOf(BookingState())

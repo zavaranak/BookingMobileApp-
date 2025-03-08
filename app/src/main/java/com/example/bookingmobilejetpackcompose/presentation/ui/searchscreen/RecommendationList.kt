@@ -1,4 +1,4 @@
-package com.example.bookingmobilejetpackcompose.presentation.screen.SearchScreen
+package com.example.bookingmobilejetpackcompose.presentation.ui.searchscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -55,13 +55,14 @@ fun RecommendationList(onCloseDialog:()->Unit,onSelectLocation:(String)->Unit){
                 } else {
                     popularSearches.forEach { search ->
                         Box(modifier = Modifier.fillMaxWidth(0.8f).padding(10.dp)){
-                            ThemeButton(search,"normal","filled",{onSelectLocation(search);onCloseDialog()})
+                            ThemeButton(search,"normal","filled"){onSelectLocation(search);onCloseDialog()}
                         }
                     }
                 }
                 Box(modifier = Modifier.fillMaxWidth(0.8f).padding(10.dp)){
 
-                ThemeButton("Закрыть.","normal","dark",{ onCloseDialog() })
+
+                    ThemeButton("Закрыть.","normal","dark"){onCloseDialog()}
                 }
 
             }
