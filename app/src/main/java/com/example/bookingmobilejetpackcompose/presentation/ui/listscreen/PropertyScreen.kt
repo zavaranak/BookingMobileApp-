@@ -1,6 +1,5 @@
 package com.example.bookingmobilejetpackcompose.presentation.ui.listscreen
 
-import android.content.res.Resources.Theme
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

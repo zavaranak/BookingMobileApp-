@@ -14,12 +14,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.bookingmobilejetpackcompose.presentation.store.BookingState
-import com.example.bookingmobilejetpackcompose.presentation.store.Date
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeButton
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeText
 import com.example.bookingmobilejetpackcompose.presentation.ui.CustomColumnContainer
 import com.example.bookingmobilejetpackcompose.presentation.ui.CustomInputField
 import com.example.bookingmobilejetpackcompose.presentation.ui.TopBar
+import com.example.bookingmobilejetpackcompose.presentation.utils.Date
 import com.example.bookingmobilejetpackcompose.presentation.utils.dayDifference
 import com.example.bookingmobilejetpackcompose.presentation.utils.propertySample
 import com.example.bookingmobilejetpackcompose.presentation.utils.propertySample2

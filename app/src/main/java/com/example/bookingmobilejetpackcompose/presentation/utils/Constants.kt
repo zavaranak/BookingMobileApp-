@@ -1,26 +1,5 @@
 package com.example.bookingmobilejetpackcompose.presentation.utils
 
-
-data class Property(
-    val id: String,
-    val name:String,
-    val address: String,
-    val price: Float,
-    val imgSrc: String,
-    val bargain: Boolean,
-    val description:String,
-    val imgSrcArray: Array<String>,
-    val service:Array<String>,
-    val owner: Owner
-)
-
-
-data class Owner(
-    val id:String,
-    val tel:String,
-    val email:String
-)
-
 val Routes = listOf("search","list","profile","notifications")
 val Labels = listOf("Поиск","Список","Профиль","Уведомление")
 val ownerSample = Owner(
@@ -51,4 +30,17 @@ val propertySample2 = Property(
     arrayOf("","",""),
     arrayOf("парковка", "завтрак", "уборка", "кухня"),
     ownerSample
+)
+
+val clientSample = Client(
+    id = "1",
+    username = "user1@email.com",
+    FIO = "Dang Phuong Nam",
+    tel = "+7888888888"
+)
+
+val notificationSample = Notification(
+    id ="1",
+    label = "sample notification",
+    description = "описаниеееееееееееееееееееееееееееееее"
 )

@@ -1,7 +1,5 @@
 package com.example.bookingmobilejetpackcompose.presentation.utils
 
-import com.example.bookingmobilejetpackcompose.presentation.store.Date
-
 fun dayDifference(startDate: Date, endDate: Date): Long {
     val startCalendar = startDate.toCalendar()
     val endCalendar = endDate.toCalendar()

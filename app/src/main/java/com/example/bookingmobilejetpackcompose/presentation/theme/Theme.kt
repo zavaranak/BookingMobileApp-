@@ -30,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -105,6 +107,7 @@ fun ThemeButton(name:String,size:String?,color:String, onClick: (()->Unit)?){
 
 fun calFontSize(size:String?): TextUnit{
     when (size) {
+        "super"-> return 40.sp
         "big" -> return 20.sp
         "small" -> return 15.sp
         else -> {
@@ -177,9 +180,13 @@ fun ThemeOutlineTextField(value:String,handleChange:(String)->Unit, type:String,
             .fillMaxSize()
             .border(BorderStroke(2.dp, color = Purple40), shape = RoundedCornerShape(10.dp)),
         shape = RoundedCornerShape(10.dp),
-        keyboardOptions = KeyboardOptions(keyboardType = if(type=="number") KeyboardType.Number else KeyboardType.Text),
+        keyboardOptions = KeyboardOptions(keyboardType =
+            if (type=="number") KeyboardType.Number
+            else if (type =="password" ) KeyboardType.Password
+            else KeyboardType.Text ),
         singleLine = true,
         maxLines = 1,
+        visualTransformation = if (type == "password") PasswordVisualTransformation() else VisualTransformation.None
 //        textStyle = LocalTextStyle.current.copy(fontSize = 14.sp)
     )
 }

@@ -3,29 +3,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.bookingmobilejetpackcompose.presentation.utils.Date
 import java.util.Calendar
 
-data class Date(
-    val day:Int,
-    val month: Int,
-    val year: Int
-){
-    override fun toString(): String {
-        val dayStr:String = if(day>9)day.toString() else "0$day"
-        val monthStr:String = if(month>9)month.toString() else "0$month"
-        return "$dayStr.$monthStr.$year"
-    }
-    fun toTimestamp(): Long {
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month-1, day)
-        return calendar.timeInMillis
-    }
-    fun toCalendar(): Calendar {
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month - 1, day) // Month is 0-based in Calendar
-        return calendar
-    }
-}
 
 data class BookingState(
     val location: String,

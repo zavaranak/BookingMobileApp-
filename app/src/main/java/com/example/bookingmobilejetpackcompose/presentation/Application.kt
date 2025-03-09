@@ -9,7 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import com.example.bookingmobilejetpackcompose.presentation.screen.Layout
 import com.example.bookingmobilejetpackcompose.presentation.screen.ListScreen
+import com.example.bookingmobilejetpackcompose.presentation.screen.NotificationScreen
+import com.example.bookingmobilejetpackcompose.presentation.screen.ProfileScreen
 import com.example.bookingmobilejetpackcompose.presentation.screen.SearchScreen
+import com.example.bookingmobilejetpackcompose.presentation.store.AuthViewModel
 import com.example.bookingmobilejetpackcompose.presentation.store.BookingViewModel
 import com.example.bookingmobilejetpackcompose.presentation.utils.Routes
 
@@ -20,13 +23,14 @@ fun Application() {
     val navController = rememberNavController()
 
     val navGraph = navController.createGraph(startDestination = Routes[0]) {
-        val viewModel:BookingViewModel = viewModel()
+        val authViewModel:AuthViewModel = viewModel()
+        val bookingViewModel:BookingViewModel = viewModel()
         composable(route = Routes[0]) {
-            SearchScreen(navController,viewModel)
+            SearchScreen(navController,bookingViewModel)
         }
-        composable(Routes[1]) { ListScreen(navController,viewModel) }
-        composable(Routes[2]) {  Text(Routes[2]) }
-        composable(Routes[3]) {  Text(Routes[3]) }
+        composable(Routes[1]) { ListScreen(navController,bookingViewModel) }
+        composable(Routes[2]) {  ProfileScreen(navController,authViewModel) }
+        composable(Routes[3]) {  NotificationScreen(navController,authViewModel) }
     }
     Layout(navController){
         NavHost(

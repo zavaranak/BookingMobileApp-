@@ -16,11 +16,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import com.example.bookingmobilejetpackcompose.presentation.ui.Logo
 import androidx.compose.ui.unit.dp
-
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bookingmobilejetpackcompose.presentation.store.BookingViewModel
 import com.example.bookingmobilejetpackcompose.presentation.ui.Slogan
-import com.example.bookingmobilejetpackcompose.presentation.store.Date
 import com.example.bookingmobilejetpackcompose.presentation.theme.Purple40
 import com.example.bookingmobilejetpackcompose.presentation.ui.CustomColumnContainer
 import java.util.Calendar
@@ -30,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.bookingmobilejetpackcompose.presentation.ui.searchscreen.RecommendationList
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeButton
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeOutlineTextField
+import com.example.bookingmobilejetpackcompose.presentation.utils.Date
 import com.example.bookingmobilejetpackcompose.presentation.utils.Routes
 
 
@@ -175,7 +173,6 @@ fun DateInput(name: String, dateState: Date?, onDateChange: ((Date) -> Unit)) {
                 ) {
                     DatePicker(
                         state = datePickerState,
-
                     )
                 }}
                 Button(
