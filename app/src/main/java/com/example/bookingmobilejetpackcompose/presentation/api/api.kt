@@ -1,14 +1,8 @@
 package com.example.bookingmobilejetpackcompose.presentation.api
 
+import com.example.bookingmobilejetpackcompose.presentation.utils.Property
+import com.example.bookingmobilejetpackcompose.presentation.utils.propertySample
 import kotlinx.coroutines.delay
-
-data class Property(
-    val name:String,
-    val address: String,
-    val price: Float,
-    val imgSrc: String,
-    val bargain: Boolean
-)
 
 
 suspend fun getPopularSearches() : List<String>{
@@ -30,7 +24,7 @@ suspend fun getResults(location:String,startTimeStamp:Int,endTimeStamp:Int, gues
 
 suspend fun getPropertyById(id:String) : Property?{
     delay(200)
-    val response:Property? = if (id!="") Property("Name","address of property",1000f,"https://example.com/image.jpg",true)
+    val response:Property? = if (id!="") propertySample
         else null
     return response
 }

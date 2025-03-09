@@ -33,6 +33,14 @@ import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeText
 import com.example.bookingmobilejetpackcompose.presentation.ui.CustomColumnContainer
 import com.example.bookingmobilejetpackcompose.presentation.ui.ScrollableColumn
 
+
+/*
+* This screen need Logic for filter check boxes. and logic for "Confirm button"
+*
+*
+*
+* */
+
 @Composable
 fun FilterMenu(onCloseDialog:()->Unit,filterHandler:()->Unit ){
     Dialog(
@@ -59,7 +67,7 @@ fun FilterMenu(onCloseDialog:()->Unit,filterHandler:()->Unit ){
 
                     }
                     Box(modifier = Modifier.weight(1f)) {
-                        ThemeButton("подтвердть", "normal", "bold") { }
+                        ThemeButton("подтвердть", "normal", "bold") {onCloseDialog(); filterHandler() }
                     }
                 }
                 FilterBox()
@@ -113,12 +121,12 @@ fun FilterBox(){
                 var checked by remember { mutableStateOf(false) }
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(0.8f)) {
                     Box(modifier = Modifier.weight(0.4f)){
-                        Text("вариант "+ i.toString())
+                        Text("вариант $i")
                     }
                     Box(modifier = Modifier.weight(0.5f)){
                         Checkbox(
                             checked=checked,
-                            onCheckedChange =  {checked = if(checked) false else true},
+                            onCheckedChange =  {checked = !checked },
                         )
                     }
 

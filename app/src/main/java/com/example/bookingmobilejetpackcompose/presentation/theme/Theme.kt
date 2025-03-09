@@ -85,7 +85,7 @@ fun ThemeButton(name:String,size:String?,color:String, onClick: (()->Unit)?){
             .fillMaxWidth()
             .border(
                 BorderStroke(1.dp, _colors.contentColor),
-                shape = RoundedCornerShape(15.dp)
+                shape = RoundedCornerShape(50.dp)
             ),
         colors = _colors,
 

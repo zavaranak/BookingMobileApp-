@@ -26,13 +26,14 @@ import com.example.bookingmobilejetpackcompose.presentation.ui.CustomColumnConta
 import java.util.Calendar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavController
 import com.example.bookingmobilejetpackcompose.presentation.ui.searchscreen.RecommendationList
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeButton
-
+import com.example.bookingmobilejetpackcompose.presentation.utils.Routes
 
 
 @Composable
-fun SearchScreen(viewModel:BookingViewModel=viewModel()) {
+fun SearchScreen(navController: NavController,viewModel:BookingViewModel=viewModel()) {
     var showList by remember { mutableStateOf(false) }
     CustomColumnContainer {
         Box(modifier = Modifier.padding(bottom = 80.dp, top = 40.dp)){
@@ -42,7 +43,7 @@ fun SearchScreen(viewModel:BookingViewModel=viewModel()) {
         InputForm(viewModel)
         Box(modifier = Modifier.fillMaxWidth(0.8f)){
 
-        ThemeButton(name = "Поиск",size="big", color="light" ,null)
+        ThemeButton(name = "Поиск",size="big", color="light" ,{navController.navigate(Routes[1])})
         }
         Box(
             modifier = Modifier.fillMaxWidth(0.8f).padding(top=40.dp)
@@ -64,7 +65,8 @@ fun InputForm(viewModel: BookingViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OutlinedTextField(
             value = state.location,
@@ -76,7 +78,7 @@ fun InputForm(viewModel: BookingViewModel) {
                 )
             },
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(0.8f)
                 .height(60.dp)
                 .border(BorderStroke(2.dp, color = Purple40), shape = RoundedCornerShape(10.dp)),
             shape = RoundedCornerShape(10.dp),

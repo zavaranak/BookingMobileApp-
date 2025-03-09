@@ -16,29 +16,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.bookingmobilejetpackcompose.presentation.store.BookingViewModel
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeButton
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeTextOutline
 import com.example.bookingmobilejetpackcompose.presentation.ui.CustomColumnContainer
 import com.example.bookingmobilejetpackcompose.R
-import com.example.bookingmobilejetpackcompose.presentation.api.Property
+import com.example.bookingmobilejetpackcompose.presentation.utils.Property
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeText
 import com.example.bookingmobilejetpackcompose.presentation.ui.ScrollableColumn
 import com.example.bookingmobilejetpackcompose.presentation.ui.listscreen.FilterMenu
 import com.example.bookingmobilejetpackcompose.presentation.ui.listscreen.PropertyImageFitWidth
-
+import com.example.bookingmobilejetpackcompose.presentation.ui.listscreen.ProperyScreen
+import com.example.bookingmobilejetpackcompose.presentation.utils.propertySample
 
 
 @Composable
-fun ListScreen(viewModel:BookingViewModel = viewModel()){
-
-
-    CustomColumnContainer {
-        TopBar(viewModel.bookingState.location)
-        ScrollableColumn {
-            PropertyCard()
+fun ListScreen(navController: NavController,viewModel:BookingViewModel = viewModel()){
+    var selectedProperty by remember { mutableStateOf<Property?>(null) }
+    if(selectedProperty!=null){
+        ProperyScreen(selectedProperty){selectedProperty=null}
+    }
+    if(selectedProperty==null){
+        CustomColumnContainer {
+            TopBar(viewModel.bookingState.location)
+            ScrollableColumn {
+                PropertyCard{selectedProperty=it}
+            }
         }
     }
+
 }
 
 @Composable
@@ -49,7 +56,7 @@ fun TopBar(location:String){
         FilterMenu({openFilter=false},{})
     }
     Row(
-        modifier = Modifier.fillMaxWidth(0.9f).padding(top=5.dp),
+        modifier = Modifier.fillMaxWidth(0.9f).padding(top = 5.dp, bottom = 5.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -66,8 +73,8 @@ fun TopBar(location:String){
 
 
 @Composable
-fun PropertyCard(){
-    val property = Property("haha","hihi",1000f,"https://example.com/image.jpg",true)
+fun PropertyCard(setSelectedProperty:(Property)->Unit){
+    val property = propertySample
     Column (
         modifier = Modifier.fillMaxWidth(0.9f),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -90,7 +97,9 @@ fun PropertyCard(){
                     ThemeTextOutline(property.price.toString()+" руб.")
                 }
                 Box(Modifier.weight(1f)){
-                    ThemeButton("Подробнее","small","filled"){}
+                    ThemeButton("Подробнее","small","filled"){
+                        setSelectedProperty(property)
+                    }
                 }
 
             }
