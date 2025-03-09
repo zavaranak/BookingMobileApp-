@@ -3,7 +3,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
+import java.util.Calendar
 
 data class Date(
     val day:Int,
@@ -15,17 +15,32 @@ data class Date(
         val monthStr:String = if(month>9)month.toString() else "0$month"
         return "$dayStr.$monthStr.$year"
     }
+    fun toTimestamp(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month-1, day)
+        return calendar.timeInMillis
+    }
+    fun toCalendar(): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month - 1, day) // Month is 0-based in Calendar
+        return calendar
+    }
 }
 
 data class BookingState(
-    val location: String = "Томск",
-    val guestNumber: Int = 1,
-    val startDate: Date? =null,
-    val endDate: Date? = null
+    val location: String,
+    val guestNumber: Int,
+    val startDate: Date,
+    val endDate: Date,
 )
 class BookingViewModel : ViewModel() {
 
-    var bookingState by mutableStateOf(BookingState())
+    var bookingState by mutableStateOf(BookingState(
+        location = "Томск",
+        guestNumber = 1,
+        startDate = getCurrentDate(),
+        endDate = getCurrentDate()
+    ))
         private  set
     fun updateLocation(newLocation: String) {
         bookingState = bookingState.copy(location = newLocation)
@@ -44,4 +59,12 @@ class BookingViewModel : ViewModel() {
         bookingState = bookingState.copy(endDate = end)
     }
 
+}
+
+fun getCurrentDate():Date{
+    val calendar = Calendar.getInstance()
+    val year: Int = calendar.get(Calendar.YEAR)
+    val month: Int = calendar.get(Calendar.MONTH) + 1
+    val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+    return Date(day, month, year)
 }

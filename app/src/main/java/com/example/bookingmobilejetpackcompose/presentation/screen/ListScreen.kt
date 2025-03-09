@@ -29,19 +29,21 @@ import com.example.bookingmobilejetpackcompose.presentation.ui.listscreen.Filter
 import com.example.bookingmobilejetpackcompose.presentation.ui.listscreen.PropertyImageFitWidth
 import com.example.bookingmobilejetpackcompose.presentation.ui.listscreen.ProperyScreen
 import com.example.bookingmobilejetpackcompose.presentation.utils.propertySample
+import com.example.bookingmobilejetpackcompose.presentation.utils.propertySample2
 
 
 @Composable
-fun ListScreen(navController: NavController,viewModel:BookingViewModel = viewModel()){
+fun ListScreen(navController: NavController,viewModel:BookingViewModel){
     var selectedProperty by remember { mutableStateOf<Property?>(null) }
     if(selectedProperty!=null){
-        ProperyScreen(selectedProperty){selectedProperty=null}
+        ProperyScreen(selectedProperty,viewModel){selectedProperty=null}
     }
     if(selectedProperty==null){
         CustomColumnContainer {
             TopBar(viewModel.bookingState.location)
             ScrollableColumn {
-                PropertyCard{selectedProperty=it}
+                PropertyCard(id="1"){selectedProperty=it}
+                PropertyCard(id="2"){selectedProperty=it}
             }
         }
     }
@@ -73,10 +75,10 @@ fun TopBar(location:String){
 
 
 @Composable
-fun PropertyCard(setSelectedProperty:(Property)->Unit){
-    val property = propertySample
+fun PropertyCard(id:String,setSelectedProperty:(Property)->Unit){
+    val property = if(id=="1") propertySample else propertySample2
     Column (
-        modifier = Modifier.fillMaxWidth(0.9f),
+        modifier = Modifier.fillMaxWidth(0.9f).padding(bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Box(modifier = Modifier.fillMaxWidth().height(150.dp)){

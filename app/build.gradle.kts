@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -58,5 +59,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("io.coil-kt:coil-compose:2.4.0")
+//    kapt("com.google.dagger:hilt-compiler:2.44")
+//    implementation( "com.google.dagger:hilt-android:2.44")
+//    implementation( "androidx.hilt:hilt-navigation-compose:1.0.0")
 }
 

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import com.example.bookingmobilejetpackcompose.presentation.ui.Logo
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bookingmobilejetpackcompose.presentation.store.BookingViewModel
 import com.example.bookingmobilejetpackcompose.presentation.ui.Slogan
@@ -29,11 +29,12 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import com.example.bookingmobilejetpackcompose.presentation.ui.searchscreen.RecommendationList
 import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeButton
+import com.example.bookingmobilejetpackcompose.presentation.theme.ThemeOutlineTextField
 import com.example.bookingmobilejetpackcompose.presentation.utils.Routes
 
 
 @Composable
-fun SearchScreen(navController: NavController,viewModel:BookingViewModel=viewModel()) {
+fun SearchScreen(navController: NavController,viewModel:BookingViewModel) {
     var showList by remember { mutableStateOf(false) }
     CustomColumnContainer {
         Box(modifier = Modifier.padding(bottom = 80.dp, top = 40.dp)){
@@ -46,7 +47,9 @@ fun SearchScreen(navController: NavController,viewModel:BookingViewModel=viewMod
         ThemeButton(name = "Поиск",size="big", color="light" ,{navController.navigate(Routes[1])})
         }
         Box(
-            modifier = Modifier.fillMaxWidth(0.8f).padding(top=40.dp)
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(top = 40.dp)
         ){
             ThemeButton(name = "Самые популярные поиски",size="normal",color="dark") { showList=true}
         }
@@ -68,33 +71,26 @@ fun InputForm(viewModel: BookingViewModel) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OutlinedTextField(
-            value = state.location,
-            onValueChange = { viewModel.updateLocation(it) },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.LocationOn,
-                    contentDescription = "Location Icon"
-                )
-            },
+        Box(
             modifier = Modifier
                 .fillMaxWidth(0.8f)
                 .height(60.dp)
-                .border(BorderStroke(2.dp, color = Purple40), shape = RoundedCornerShape(10.dp)),
-            shape = RoundedCornerShape(10.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            singleLine = true,
-            maxLines = 1,
-            textStyle = LocalTextStyle.current.copy(fontSize = 14.sp)
-        )
-
+        ){
+        ThemeOutlineTextField(value =  state.location, type = "text", leaddingIcon = {
+            Icon(
+                imageVector = Icons.Default.LocationOn,
+                contentDescription = "Location Icon"
+            )
+        }, handleChange = { viewModel.updateLocation(it) })
+        }
         DateInput("Начало:",state.startDate,viewModel::updateDateStart)
         DateInput("Конец:",state.endDate,viewModel::updateDateEnd)
         GuestInput("Гости:",state.guestNumber,viewModel::updateGuestNumber)
     }
 }
 @Composable
-fun GuestInput(name:String,guestState: Int?,onGuestChange: ((Int) -> Unit)) {
+fun GuestInput(name:String,guestState: Int,onGuestChange: ((Int) -> Unit)) {
+    var tempGuest by remember{ mutableStateOf(guestState.toString())}
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
@@ -116,10 +112,14 @@ fun GuestInput(name:String,guestState: Int?,onGuestChange: ((Int) -> Unit)) {
             modifier = Modifier.weight(1f),
         ) {
             OutlinedTextField(
-                value = guestState.toString(),
+                value = tempGuest,
                 onValueChange = {
-                    val newVal = it.toIntOrNull() ?: 1
-                    onGuestChange(newVal)
+                    val newVal = it.toIntOrNull()
+                    tempGuest = it
+                    if (newVal!=null){
+                        onGuestChange(newVal)
+                    }
+
                 },
                 modifier = outlineModifier,
                 shape = RoundedCornerShape(10.dp),
@@ -147,16 +147,6 @@ fun DateInput(name: String, dateState: Date?, onDateChange: ((Date) -> Unit)) {
             Box(
                 modifier = Modifier.weight(1f)
             ) {
-                LaunchedEffect(Unit) {
-                    if (dateState == null) {
-                        val calendar = Calendar.getInstance()
-                        val year: Int = calendar.get(Calendar.YEAR)
-                        val month: Int = calendar.get(Calendar.MONTH) + 1
-                        val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
-                        val newDate = Date(day, month, year)
-                        onDateChange(newDate)
-                    }
-                }
                 if (showDatePicker) {
                 DatePickerDialog(
                     onDismissRequest = { },

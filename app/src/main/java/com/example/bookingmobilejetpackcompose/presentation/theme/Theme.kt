@@ -5,12 +5,20 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -21,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -158,6 +167,22 @@ fun setColors(color:String):ButtonColors{
     }
 }
 
+@Composable
+fun ThemeOutlineTextField(value:String,handleChange:(String)->Unit, type:String, leaddingIcon: (@Composable ()->Unit)?){
+    OutlinedTextField(
+        value = value,
+        onValueChange = {  handleChange(it) },
+        leadingIcon = leaddingIcon,
+        modifier = Modifier
+            .fillMaxSize()
+            .border(BorderStroke(2.dp, color = Purple40), shape = RoundedCornerShape(10.dp)),
+        shape = RoundedCornerShape(10.dp),
+        keyboardOptions = KeyboardOptions(keyboardType = if(type=="number") KeyboardType.Number else KeyboardType.Text),
+        singleLine = true,
+        maxLines = 1,
+//        textStyle = LocalTextStyle.current.copy(fontSize = 14.sp)
+    )
+}
 
 @Composable
 fun ThemeTextOutline(text:String){
